@@ -1,0 +1,26 @@
+man uname
+uname -r
+ls /lib/modules/$(uname -r)/buildcode /lib/modules/7.0.0-38-generic/build/include/linux/module.h
+code /lib/modules/7.0.0-38-generic/build/include/linux/module.h
+code /lib/modules/7.0.0-38-generic/build/include/
+make
+make clean
+sudo dmesg
+sudo dmesg -C
+modinfo helloKernel.ko
+sudo insmod helloKernel.ko
+sudo modprobe xyy //must be in /lib and handle depenencies
+sudo rmmod helloKernel
+sudo dmesg | tail
+strings helloKernel.ko
+lsmod
+lsmod | wc -l
+lsmod | grep 'hello*'
+
+
+
+openssl req -new -x509 -newkey rsa:2048 -keyout MOK.priv -out MOK.der -nodes -days 3650 -subj "/CN=My Custom Kernel Module Key/
+sudo mokutil --import MOK.der
+sudo reboot
+sudo /usr/src/linux-headers-$(uname -r)/scripts/sign-file sha256 /root/mok-keys/MOK.priv /root/mok-keys/MOK.der my_module.ko
+
